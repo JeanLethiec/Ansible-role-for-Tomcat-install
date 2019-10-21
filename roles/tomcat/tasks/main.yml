@@ -5,8 +5,12 @@
     update_cache: yes
 
 - name: Create Tomcat user
-  command: useradd -r -m -U -d /opt/tomcat -s /bin/false tomcat
-  ignore_errors: yes
+  user:
+    name: tomcat
+    system: yes
+    create_home: no
+    home: /opt/tomcat
+    shell: /bin/false
 
 - name: Download tomcat archive
   get_url:
@@ -36,7 +40,7 @@
   file:
     path: "{{ item }}"
     mode: a+x
-   with_fileglob:
+  with_fileglob:
     - "/opt/tomcat/latest/bin/*.sh"
 
 - name: Create systemd unit file
