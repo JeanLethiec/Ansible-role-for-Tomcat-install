@@ -4,3 +4,5 @@
     - tomcat
   vars:
     tomcat_version: "9.0.27"
+    admin_id: "admin"
+    admin_pwd: "admin_password"

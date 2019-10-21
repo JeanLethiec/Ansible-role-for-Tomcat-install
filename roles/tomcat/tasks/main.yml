@@ -68,3 +68,47 @@
 
 - name: Firewall adjustment to allow incoming traffic on 8080 port
   command: ufw allow 8080/tcp
+
+- name: Create XML elements for new user for Tomcat Web Management Interface
+  xml:
+    path: /opt/tomcat/latest/conf/tomcat-users.xml
+    xpath: /tomcat-users
+    set_children:
+      - role
+      - role
+      - user
+
+- name: Set correct attributes for role n1 in XML
+  xml:
+    path: /opt/tomcat/latest/conf/tomcat-users.xml
+    xpath: /tomcat-users/role[0]
+    attribute: rolename
+    value: admin-gui
+
+- name: Set correct attributes for role n2 in XML
+  xml:
+    path: /opt/tomcat/latest/conf/tomcat-users.xml
+    xpath: /tomcat-users/role[0]
+    attribute: rolename
+    value: manager-gui
+
+- name: Set correct username attribute for user in XML
+  xml:
+    path: /opt/tomcat/latest/conf/tomcat-users.xml
+    xpath: /tomcat-users/user
+    attribute: username
+    value: "{{ admin_id }}"
+
+- name: Set correct password attribute for user in XML
+  xml:
+    path: /opt/tomcat/latest/conf/tomcat-users.xml
+    xpath: /tomcat-users/user
+    attribute: password
+    value: "{{ admin_pwd }}"
+
+- name: Set correct roles attribute for user in XML
+  xml:
+    path: /opt/tomcat/latest/conf/tomcat-users.xml
+    xpath: /tomcat-users/user
+    attribute: roles
+    value: admin-gui,manager-gui
