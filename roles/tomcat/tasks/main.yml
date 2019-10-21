@@ -72,7 +72,9 @@
 - name: Create XML elements for new user for Tomcat Web Management Interface
   xml:
     path: /opt/tomcat/latest/conf/tomcat-users.xml
-    xpath: /tomcat-users
+    namespaces:
+      tomcat: http://tomcat.apache.org/xml
+    xpath: /tomcat:tomcat-users
     set_children:
       - role
       - role
@@ -82,8 +84,8 @@
   xml:
     path: /opt/tomcat/latest/conf/tomcat-users.xml
     namespaces:
-      data: https://tomcat.apache.org/xml
-    xpath: /tomcat-users/role[0]
+      tomcat: http://tomcat.apache.org/xml
+    xpath: /tomcat:tomcat-users/tomcat:role[0]
     attribute: rolename
     value: admin-gui
 
@@ -91,8 +93,8 @@
   xml:
     path: /opt/tomcat/latest/conf/tomcat-users.xml
     namespaces:
-      data: https://tomcat.apache.org/xml
-    xpath: /tomcat-users/role[0]
+      tomcat: http://tomcat.apache.org/xml
+    xpath: /tomcat:tomcat-userstomcat:/role[0]
     attribute: rolename
     value: manager-gui
 
@@ -100,8 +102,8 @@
   xml:
     path: /opt/tomcat/latest/conf/tomcat-users.xml
     namespaces:
-      data: https://tomcat.apache.org/xml
-    xpath: /tomcat-users/user
+      tomcat: http://tomcat.apache.org/xml
+    xpath: /tomcat:tomcat-users/tomcat:user
     attribute: username
     value: "{{ admin_id }}"
 
@@ -109,8 +111,8 @@
   xml:
     path: /opt/tomcat/latest/conf/tomcat-users.xml
     namespaces:
-      data: https://tomcat.apache.org/xml
-    xpath: /tomcat-users/user
+      tomcat: http://tomcat.apache.org/xml
+    xpath: /tomcat:tomcat-users/tomcat:user
     attribute: password
     value: "{{ admin_pwd }}"
 
@@ -118,7 +120,7 @@
   xml:
     path: /opt/tomcat/latest/conf/tomcat-users.xml
     namespaces:
-      data: https://tomcat.apache.org/xml
-    xpath: /tomcat-users/user
+      tomcat: http://tomcat.apache.org/xml
+    xpath: /tomcat:tomcat-userstomcat:/user
     attribute: roles
     value: admin-gui,manager-gui
