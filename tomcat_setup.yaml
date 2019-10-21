@@ -2,3 +2,5 @@
 - hosts: webservers
   roles:
     - tomcat
+  vars:
+    tomcat_version: "9.0.27"

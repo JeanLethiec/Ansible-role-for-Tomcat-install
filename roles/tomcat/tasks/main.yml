@@ -14,25 +14,25 @@
 
 - name: Download tomcat archive
   get_url:
-    url: http://www-eu.apache.org/dist/tomcat/tomcat-9/v9.0.27/bin/apache-tomcat-9.0.27.tar.gz
+    url: "http://www-eu.apache.org/dist/tomcat/tomcat-9/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz"
     dest: /tmp
     mode: "777"
 
 - name: Extract Tomcat archive
   unarchive:
-    src: /tmp/apache-tomcat-9.0.27.tar.gz
+    src: /tmp/apache-tomcat-{{ tomcat_version }}.tar.gz
     dest: /opt/tomcat
 
 - name: Manage directory ownership
   file:
-    path: /opt/tomcat/apache-tomcat-9.0.27
+    path: /opt/tomcat/apache-tomcat-{{ tomcat_version }}
     state: directory
     recurse: yes
     owner: tomcat
 
 - name: Symbolic link creation
   file:
-    src: /opt/tomcat/apache-tomcat-9.0.27
+    src: /opt/tomcat/apache-tomcat-{{ tomcat_version }}
     dest: /opt/tomcat/latest
     state: link
 
