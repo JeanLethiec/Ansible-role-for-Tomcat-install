@@ -5,7 +5,8 @@
     update_cache: yes
 
 - name: Create Tomcat user
-  command: id -u tomcat &>/dev/null || useradd -r -m -U -d /opt/tomcat -s /bin/false tomcat
+  command: useradd -r -m -U -d /opt/tomcat -s /bin/false tomcat
+  ignore_errors: yes
 
 - name: Download tomcat archive
   get_url:
