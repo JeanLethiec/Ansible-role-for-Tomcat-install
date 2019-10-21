@@ -54,21 +54,6 @@
     src: "{{ role_path }}/files/tomcat.service"
     dest: /etc/systemd/system/tomcat.service
 
-- name: Notify systemd that new unit file is available
-  command: systemctl daemon-reload
-
-- name: Start tomcat service
-  command: systemctl start tomcat
-
-- name: Check tomcat service status
-  command: systemctl status tomcat
-
-- name: Enable tomcat autostart
-  command: systemctl enable tomcat
-
-- name: Firewall adjustment to allow incoming traffic on 8080 port
-  command: ufw allow 8080/tcp
-
 - name: Create XML elements for new user for Tomcat Web Management Interface
   xml:
     path: /opt/tomcat/latest/conf/tomcat-users.xml
@@ -124,3 +109,18 @@
     xpath: /tomcat:tomcat-users/tomcat:user
     attribute: roles
     value: admin-gui,manager-gui
+
+- name: Notify systemd that new unit file is available
+  command: systemctl daemon-reload
+
+- name: Start tomcat service
+  command: systemctl start tomcat
+
+- name: Check tomcat service status
+  command: systemctl status tomcat
+
+- name: Enable tomcat autostart
+  command: systemctl enable tomcat
+
+- name: Firewall adjustment to allow incoming traffic on 8080 port
+  command: ufw allow 8080/tcp
