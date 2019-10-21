@@ -18,6 +18,12 @@
     dest: /tmp
     mode: "777"
 
+- name: Create tomcat directory
+  file:
+    path: /opt/tomcat
+    state: directory
+    owner: tomcat
+
 - name: Extract Tomcat archive
   unarchive:
     src: /tmp/apache-tomcat-{{ tomcat_version }}.tar.gz
@@ -39,7 +45,7 @@
 - name: Manage scripts permissions
   file:
     path: "{{ item }}"
-    mode: a+x
+    mode: +x
   with_fileglob:
     - "/opt/tomcat/latest/bin/*.sh"
 
