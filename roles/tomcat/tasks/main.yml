@@ -12,20 +12,32 @@
   get_url:
     url: http://www-eu.apache.org/dist/tomcat/tomcat-9/v9.0.27/bin/apache-tomcat-9.0.27.tar.gz
     dest: /tmp
-    model: "777"
+    mode: "777"
 
 - name: Extract Tomcat archive
-  command: tar xf /tmp/apache-tomcat-9.0.27.tar.gz -C /opt/tomcat
-
-- name: Symbolic link creation
-  command: ln -s /opt/tomcat/apache-tomcat-9.0.14 /opt/tomcat/latest
-  ignore_errors: yes
+  unarchive:
+    src: /tmp/apache-tomcat-9.0.27.tar.gz
+    dest: /opt/tomcat
 
 - name: Manage directory ownership
-  command: "chown -hR tomcat: /opt/tomcat/latest"
+  file:
+    path: /opt/tomcat/apache-tomcat-9.0.27
+    state: directory
+    recurse: yes
+    owner: tomcat
+
+- name: Symbolic link creation
+  file:
+    src: /opt/tomcat/apache-tomcat-9.0.27
+    dest: /opt/tomcat/latest
+    state: link
 
 - name: Manage scripts permissions
-  command: chmod +x /opt/tomcat/latest/bin/*.sh
+  file:
+    path: "{{ item }}"
+    mode: a+x
+   with_fileglob:
+    - "/opt/tomcat/latest/bin/*.sh"
 
 - name: Create systemd unit file
   copy:
