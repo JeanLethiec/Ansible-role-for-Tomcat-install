@@ -1,0 +1,43 @@
+---
+- name: Install OpenJDK
+  apt:
+    name: default-jdk
+    update_cache: yes
+
+- name: Create Tomcat user
+  command: useradd -r -m -U -d /opt/tomcat -s /bin/false tomcat
+
+- name: Download tomcat archive
+  command: wget http://www-eu.apache.org/dist/tomcat/tomcat-9/v9.0.14/bin/apache-tomcat-9.0.14.tar.gz -P /tmp
+
+- name: Extract Tomcat archive
+  command: tar xf /tmp/apache-tomcat-9*.tar.gz -C /opt/tomcat
+
+- name: Symbolic link creation
+  command: ln -s /opt/tomcat/apache-tomcat-9.0.14 /opt/tomcat/latest
+
+- name: Manage directory ownership
+  command: "chown -RH tomcat: /opt/tomcat/latest"
+
+- name: Manage scripts permissions
+  command: chmod +x /opt/tomcat/latest/bin/*.sh
+
+- name: Create systemd unit file
+  copy:
+    src: "{{ role_path }}/files/tomcat.service"
+    dest: /etc/systemd/system/tomcat.service
+
+- name: Notify systemd that new unit file is available
+  command: systemctl daemon-reload
+
+- name: Start tomcat service
+  command: systemctl start tomcat
+
+- name: Check tomcat service status
+  command: systemctl status tomcat
+
+- name: Enable tomcat autostart
+  command: systemctl enable tomcat
+
+- name: Firewall adjustment
+  comand: ufw allow 8080/tcp
