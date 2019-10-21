@@ -85,7 +85,7 @@
     path: /opt/tomcat/latest/conf/tomcat-users.xml
     namespaces:
       tomcat: http://tomcat.apache.org/xml
-    xpath: /tomcat:tomcat-users/tomcat:role[0]
+    xpath: /tomcat:tomcat-users/tomcat:role[1]
     attribute: rolename
     value: admin-gui
 
@@ -94,7 +94,7 @@
     path: /opt/tomcat/latest/conf/tomcat-users.xml
     namespaces:
       tomcat: http://tomcat.apache.org/xml
-    xpath: /tomcat:tomcat-userstomcat:/role[0]
+    xpath: /tomcat:tomcat-users/tomcat:role[2]
     attribute: rolename
     value: manager-gui
 
@@ -121,6 +121,6 @@
     path: /opt/tomcat/latest/conf/tomcat-users.xml
     namespaces:
       tomcat: http://tomcat.apache.org/xml
-    xpath: /tomcat:tomcat-userstomcat:/user
+    xpath: /tomcat:tomcat-users/tomcat:user
     attribute: roles
     value: admin-gui,manager-gui
